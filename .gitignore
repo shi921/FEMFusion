@@ -1,0 +1,46 @@
+# Python build, caches and virtual environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# OS and editor artifacts
+.DS_Store
+._*
+__MACOSX/
+.idea/
+.vscode/
+
+# Official downloaded data and derived caches (retain placeholders)
+/data/raw/**
+!/data/raw/**/
+!/data/raw/**/.gitkeep
+/data/interim/**
+!/data/interim/**/
+!/data/interim/**/.gitkeep
+/data/processed/**
+!/data/processed/**/
+!/data/processed/**/.gitkeep
+/data/manifests/
+
+# All local training checkpoints, metrics, and evaluation outputs
+/outputs/**
+!/outputs/**/
+!/outputs/**/.gitkeep
+
+# Legacy local folders, if migrating from a prior workspace
+/experiments/
+/checkpoints/
+
+# Other temporary artifacts
+*.zip
+*.tar.gz

@@ -1,0 +1,36 @@
+# Official AgentFEM surface FEM field representation only (NOT tetrahedral volume graph).
+data:
+  root: data/raw/agentfem
+  cache_dir: data/processed/fem/cache
+  reference_load_N: 1000.0
+  max_nodes: 4096      # deterministic spatial sampling only for larger cases
+  max_regions: 32     # geometric grid nside=floor(cuberoot(max_regions))
+  coordinate_unit: m
+  displacement_unit: m
+  stress_unit: Pa
+  train_split: train
+  validation_split: validation
+  test_split: test
+encoder:
+  name: fem_surface_mesh_mpnn
+  output_dim: 128
+  hidden_dim: 128
+  num_layers: 3
+  dropout: 0.1
+  message_passing: edge_aware_torch_index_add
+  region_method: deterministic_geometry_grid
+  reconstruction_context: token_conditioned  # node + graph token + region token
+training:
+  objective: masked_displacement_and_von_mises_stress_reconstruction
+  epochs: 100
+  batch_size: 2
+  lr: 0.001
+  weight_decay: 0.0001
+  mask_ratio: 0.25
+  fixed_train_mask: false  # true only for deterministic overfit debugging
+  resume_checkpoint: null  # CLI --resume outputs/fem/training/last.pt; last includes optimizer/RNG state
+  seed: 42
+  run_dir: outputs/fem/training
+  normalizer_fit: train_only
+  loss: equal_channel_normalized_MSE
+  augmentation_rotation: disabled

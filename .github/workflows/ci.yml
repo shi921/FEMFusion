@@ -1,0 +1,20 @@
+name: Source checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python files
+        run: python -m compileall -q src scripts run.py tests
+      - name: Validate command-line entrypoint
+        run: python run.py --help
+      - name: Run dependency-free tests
+        run: python -m unittest discover -s tests -v

@@ -1,0 +1,34 @@
+# Sources verified in included official dataset:
+# data/raw/agentfem/README.md and reproduce/bracket_lab/case.py
+# Numeric field units: reproduce/bracket_lab/operator_data.py, PARAM_BOUNDS lines 13-18.
+expected_counts:
+  train: 128
+  validation: 16
+  test: 32
+context:
+  component: symmetric double-arm support bracket
+  young_modulus_Pa: 70000000000.0
+  poisson_ratio: 0.33
+  density_kg_m3: 2700.0
+  height_m: 0.189
+  fixed_boundary: foot undersides fixed in all displacement directions
+  loading: uniform downward traction on the top seat (-z)
+  source: official data/raw/agentfem/README.md; reproduce/bracket_lab/case.py lines 70-84
+  field_source: official reproduce/bracket_lab/operator_data.py lines 13-18; physical_load_N from split CSV
+encoder:
+  name: engineering_text_encoder
+  embedding_dim: 128
+  pretrained_model: sentence-transformers/all-MiniLM-L6-v2
+  freeze_backbone: true
+  numerical_branch: true
+  max_length: 192
+training:
+  epochs: 30
+  batch_size: 8
+  lr: 0.0003
+  seed: 42
+  temperature: 0.1
+  masked_weight: 0.1
+  patience: 5
+  min_delta: 0.00001
+  checkpoint_dir: outputs/text/training

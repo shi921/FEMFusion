@@ -1,0 +1,13 @@
+project:
+  name: FEMFusion
+  seed: 42
+  embedding_dim: 128
+  device: auto
+
+dataset:
+  name: HaomingLuo/AgentFEM-Bracket-Elasticity
+  root: data/raw/agentfem
+  processed_root: data/processed
+  split_files: [train.csv, validation.csv, test.csv]
+  key: case_id
+  reference_load_N: 1000.0
